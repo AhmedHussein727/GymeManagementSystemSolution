@@ -67,7 +67,7 @@ else if (TempData["ErrorMessage"] != null)
                                 </div>
                                 <div class="info-item">
                                     <i class="bi bi-people text-primary-color me-2"></i>
-                                    <strong>Capacity:</strong> @session.AvailableSlots/@session.Capacity slots
+                                    <strong>Capacity:</strong> @(session.Capacity - session.AvailableSlots)/@session.Capacity slots
                                 </div>
                             </div>
                         </div>

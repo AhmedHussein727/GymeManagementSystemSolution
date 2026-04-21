@@ -1,11 +1,8 @@
 ﻿using GymeManagementDAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+
 
 namespace GymeManagementDAL.Data.Configurations
 {
@@ -17,9 +14,11 @@ namespace GymeManagementDAL.Data.Configurations
                 .HasColumnName("StartDate")
                 .HasDefaultValueSql("GETDATE()");
 
-            builder.HasKey(x => new { x.PlanId, x.MemberId });
+            builder.HasKey(x => x.Id);
 
-            builder.Ignore(x => x.Id);
+
+
+
         }
     }
 }

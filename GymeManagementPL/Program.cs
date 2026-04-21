@@ -37,6 +37,11 @@ namespace GymeManagementPL
             builder.Services.AddScoped<ISessionService, SessionService>();
             builder.Services.AddScoped<IAttachmentService, AttachmentService>();
             builder.Services.AddScoped<IAccountService, AccountService>();
+            builder.Services.AddScoped<IMembershipsService,MembershipService>();
+            builder.Services.AddScoped<IMembershipRepository, MembershipRepo>();
+            builder.Services.AddScoped<IMemberSessionSevice,MemberSessionSevice>();
+            builder.Services.AddScoped<IMemberRepository,MemberRepository>();
+            builder.Services.AddScoped<IMemberSessionsRepository,MemberSessionsRepository>();
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(config =>
             {
                 config.User.RequireUniqueEmail = true;

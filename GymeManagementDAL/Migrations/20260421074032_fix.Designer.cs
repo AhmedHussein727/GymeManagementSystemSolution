@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace GymeManagementDAL.Data.Migrations
+namespace GymeManagementDAL.Migrations
 {
     [DbContext(typeof(GymeDbContext))]
-    [Migration("20251114091625_AddIdentityTables")]
-    partial class AddIdentityTables
+    [Migration("20260421074032_fix")]
+    partial class fix
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -216,11 +216,11 @@ namespace GymeManagementDAL.Data.Migrations
 
             modelBuilder.Entity("GymeManagementDAL.Entities.MemberSessions", b =>
                 {
-                    b.Property<int>("MemberID")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("SessionID")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -231,23 +231,31 @@ namespace GymeManagementDAL.Data.Migrations
                     b.Property<bool>("ISAttended")
                         .HasColumnType("bit");
 
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SessionId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("MemberID", "SessionID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("SessionID");
+                    b.HasIndex("MemberId");
+
+                    b.HasIndex("SessionId");
 
                     b.ToTable("MemberSessions");
                 });
 
             modelBuilder.Entity("GymeManagementDAL.Entities.MemberShip", b =>
                 {
-                    b.Property<int>("PlanId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -258,12 +266,20 @@ namespace GymeManagementDAL.Data.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlanId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("PlanId", "MemberId");
+                    b.HasKey("Id");
 
                     b.HasIndex("MemberId");
+
+                    b.HasIndex("PlanId");
 
                     b.ToTable("MemberShips");
                 });
@@ -603,13 +619,13 @@ namespace GymeManagementDAL.Data.Migrations
                 {
                     b.HasOne("GymeManagementDAL.Entities.Member", "Member")
                         .WithMany("MemberSessions")
-                        .HasForeignKey("MemberID")
+                        .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("GymeManagementDAL.Entities.Sessions", "sessions")
                         .WithMany("MemberSessions")
-                        .HasForeignKey("SessionID")
+                        .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

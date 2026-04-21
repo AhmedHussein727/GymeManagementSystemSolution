@@ -1,15 +1,11 @@
 ﻿using GymeManagementDAL.Data.Contexts;
 using GymeManagementDAL.Entities;
 using GymeManagementDAL.Repositories.InterFaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace GymeManagementDAL.Repositories.Classes
 {
-    internal class MembershipRepo : IMembershipRepository
+    public class MembershipRepo : IMembershipRepository
     {
         private readonly GymeDbContext dbContext;
         public MembershipRepo(GymeDbContext _dbContext)
@@ -32,7 +28,7 @@ namespace GymeManagementDAL.Repositories.Classes
             return dbContext.SaveChanges();
         }
 
-        public IEnumerable<MemberShip> GetAll() => dbContext.MemberShips.ToList();
+        public IQueryable<MemberShip> GetAll() => dbContext.MemberShips;
 
 
         public MemberShip? GetById(int id) => dbContext.MemberShips.Find(id);

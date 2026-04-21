@@ -2,11 +2,7 @@
 using GymeManagementDAL.Entities;
 using GymeManagementDAL.Repositories.InterFaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace GymeManagementDAL.Repositories.Classes
 {
@@ -33,7 +29,7 @@ namespace GymeManagementDAL.Repositories.Classes
             return dbContext.SaveChanges();
         }
 
-        public IEnumerable<Sessions> GetAll() => dbContext.Sessions.ToList();
+        public IQueryable<Sessions> GetAll() => dbContext.Sessions.AsNoTracking();
 
         public IEnumerable<Sessions> GetAllSessionsWithTrainersAndCategory()
         {
@@ -46,7 +42,10 @@ namespace GymeManagementDAL.Repositories.Classes
 
         public int GetCountOfBookedSlots(int SessionId)
         {
-          return   dbContext.MemberSessions.Count(x=>x.SessionID == SessionId);
+            return dbContext.MemberSessions
+          .Include(x => x.sessions)
+          .Count(x => x.SessionId == SessionId
+             && x.sessions.EndDate > DateTime.Now);
         }
 
         public Sessions? GetSessionWithTrainerAndCategory(int SessionId)

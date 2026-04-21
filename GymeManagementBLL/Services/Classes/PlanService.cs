@@ -1,14 +1,9 @@
 ﻿using AutoMapper;
 using GymeManagementBLL.Services.Interfaces;
 using GymeManagementBLL.ViewModels.PlanViewModels;
-using GymeManagementDAL.Data.Contexts;
 using GymeManagementDAL.Entities;
 using GymeManagementDAL.Repositories.InterFaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace GymeManagementBLL.Services.Classes
 {

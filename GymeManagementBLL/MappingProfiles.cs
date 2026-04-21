@@ -1,16 +1,13 @@
 ﻿using AutoMapper;
+using GymeManagementBLL.ViewModels.MemberSession;
+using GymeManagementBLL.ViewModels.MembershipsViewModels;
 using GymeManagementBLL.ViewModels.MemberViewModels;
 using GymeManagementBLL.ViewModels.PlanViewModels;
 using GymeManagementBLL.ViewModels.SessionViewModels;
 using GymeManagementBLL.ViewModels.TrainerViewMofels;
 using GymeManagementDAL.Entities;
-using Microsoft.EntityFrameworkCore.Migrations.Operations.Builders;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+
 
 namespace GymeManagementBLL
 {
@@ -23,6 +20,8 @@ namespace GymeManagementBLL
             MapMember();
             MapTrainer();
             MapPlan();
+            MapMemberships();
+            MapMemberSession();
         }
 
         private void MapSession()
@@ -30,7 +29,7 @@ namespace GymeManagementBLL
             CreateMap<Sessions, SessionViewModel>()
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.CategoryName))
                 .ForMember(dest => dest.TrainerName, opt => opt.MapFrom(src => src.Trainer.Name))
-                .ForMember(dest => dest.AvailableSlots, opt => opt.Ignore()); 
+                .ForMember(dest => dest.AvailableSlots, opt => opt.Ignore());
 
             CreateMap<CreateSessionViewModel, Sessions>();
 
@@ -43,7 +42,7 @@ namespace GymeManagementBLL
                     .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
                     .ForMember(dest => dest.TrainerId, opt => opt.MapFrom(src => src.TrainerId));
 
-;
+            ;
 
             CreateMap<Sessions, UpdateSessionViewModel>()
                 .ForMember(dest => dest.TrainerId, opt => opt.MapFrom(src => src.TrainerId));
@@ -54,8 +53,8 @@ namespace GymeManagementBLL
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.CategoryName));
 
             CreateMap<Trainer, TrainerSelectViewModel>();
-             
-                
+
+
 
         }
 
@@ -92,7 +91,7 @@ namespace GymeManagementBLL
                     dest.Address.BuildingNumber = src.BuildingNumber;
                     dest.Address.Streat = src.Street;
                     dest.Address.City = src.City;
-                    dest.CreatedAt=DateTime.Now;
+                    dest.CreatedAt = DateTime.Now;
                 });
         }
 
@@ -101,14 +100,14 @@ namespace GymeManagementBLL
             CreateMap<CreateTrainerViewModel, Trainer>()
                 .ForMember(dest => dest.Address, opt => opt.MapFrom(src => new Address
                 {
-                        BuildingNumber = src.BuildingNumber,
-                        Streat = src.Street,
-                        City = src.City
+                    BuildingNumber = src.BuildingNumber,
+                    Streat = src.Street,
+                    City = src.City
                 }));
 
             CreateMap<Trainer, TrainerViewModel>()
                 .ForMember(dest => dest.Specialties, opt => opt.MapFrom(src => src.Specialities.ToString()))
-                .ForMember(dest=>dest.Address,opt=>opt.MapFrom(src=>$"{src.Address.BuildingNumber}-{src.Address.Streat}-{src.Address.City}"));
+                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => $"{src.Address.BuildingNumber}-{src.Address.Streat}-{src.Address.City}"));
 
             CreateMap<Trainer, TrainerToUpdateViewModel>()
                 .ForMember(dest => dest.EmailAddress, opt => opt.MapFrom(src => src.Email))
@@ -134,13 +133,36 @@ namespace GymeManagementBLL
         {
             CreateMap<Plan, PlanViewModel>();
             CreateMap<Plan, UpdatePlanViewModel>();
-                
 
-            CreateMap<UpdatePlanViewModel,Plan>()
+
+            CreateMap<UpdatePlanViewModel, Plan>()
                 .ForMember(dest => dest.Name, opt => opt.Ignore())
-                .ForMember(dest=>dest.UpdatedAt,opt=>opt.MapFrom(src=>DateTime.Now));
+                .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => DateTime.Now));
 
         }
 
+        private void MapMemberships()
+        {
+            CreateMap<MemberShip, MembershipViewModel>()
+                .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
+                .ForMember(dest => dest.MemberName, opt => opt.MapFrom(src => src.member.Name))
+                .ForMember(dest => dest.PlanName, opt => opt.MapFrom(src => src.Plan.Name))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
+
+            CreateMap<CreateMembershipViewModel, MemberShip>();
+
+
+        }
+
+        private void MapMemberSession()
+        {
+            CreateMap<CreateMemberSessionViewModel, MemberSessions>();
+
+            CreateMap<MemberSessions, MemberSessionViewModel>()
+                .ForMember(dest => dest.MemberName, opt => opt.MapFrom(src => src.Member.Name))
+                .ForMember(dest => dest.BookingDate, opt => opt.MapFrom(src => src.CreatedAt))
+                .ForMember(dest => dest.MemberSessionId, opt => opt.MapFrom(src => src.Id));
+
+        }
     }
 }

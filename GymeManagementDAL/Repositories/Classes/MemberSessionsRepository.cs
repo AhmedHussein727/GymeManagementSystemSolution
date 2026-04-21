@@ -1,15 +1,12 @@
 ﻿using GymeManagementDAL.Data.Contexts;
 using GymeManagementDAL.Entities;
 using GymeManagementDAL.Repositories.InterFaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace GymeManagementDAL.Repositories.Classes
 {
-    internal class MemberSessionsRepository : IMemberSessionsRepository
+    public class MemberSessionsRepository : IMemberSessionsRepository
     {
         private readonly GymeDbContext dbContext;
         public MemberSessionsRepository(GymeDbContext _dbContext)
@@ -32,7 +29,7 @@ namespace GymeManagementDAL.Repositories.Classes
             return dbContext.SaveChanges();
         }
 
-        public IEnumerable<MemberSessions> GetAll() => dbContext.MemberSessions.ToList();
+        public IQueryable<MemberSessions> GetAll() => dbContext.MemberSessions.AsTracking();
 
 
         public MemberSessions? GetById(int id) => dbContext.MemberSessions.Find(id);

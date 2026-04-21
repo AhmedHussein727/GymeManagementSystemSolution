@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
+
 
 namespace GymeManagementDAL.Entities
 {
     public class MemberShip:BaseEntity
     {
+        
+    
         public DateTime EndDate { get; set; }
         public string Status { 
             get {

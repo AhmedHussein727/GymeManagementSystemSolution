@@ -1,11 +1,7 @@
 ﻿using GymeManagementDAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace GymeManagementDAL.Data.Configurations
 {
@@ -19,15 +15,15 @@ namespace GymeManagementDAL.Data.Configurations
 
             builder.HasOne(ms => ms.Member)
                 .WithMany(m => m.MemberSessions)
-                .HasForeignKey(ms => ms.MemberID);
+                .HasForeignKey(ms => ms.MemberId);
 
             builder.HasOne(ms => ms.sessions)
                 .WithMany(s=>s.MemberSessions)
-                .HasForeignKey(ms=>ms.SessionID);
+                .HasForeignKey(ms=>ms.SessionId);
 
-            builder.HasKey(ms => new {ms.MemberID,ms.SessionID});
+            builder.HasKey(x=>x.Id);
 
-            builder.Ignore(ms => ms.Id);
+            
                 
         }
     }

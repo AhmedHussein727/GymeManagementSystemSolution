@@ -1,15 +1,11 @@
 ﻿using GymeManagementDAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace GymeManagementDAL.Repositories.InterFaces
 {
     public interface ISessionRepository
     {
-        IEnumerable<Sessions> GetAll();
+        IQueryable<Sessions> GetAll();
 
         Sessions? GetById(int id);
 

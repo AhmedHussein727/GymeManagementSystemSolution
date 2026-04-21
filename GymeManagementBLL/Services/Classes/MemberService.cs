@@ -129,7 +129,7 @@ namespace GymeManagementBLL.Services.Classes
             if (EmailExists.Any() || PhoneExists.Any()) return false;
 
             if (member == null) return false;
-            var sessionsIds = UnitOfWork.GetRepository<MemberSessions>().GetAll(x => x.MemberID == MemberId).Select(x=>x.SessionID);
+            var sessionsIds = UnitOfWork.GetRepository<MemberSessions>().GetAll(x => x.MemberId == MemberId).Select(x=>x.SessionId);
             var hasFutureSessions = UnitOfWork.GetRepository<Sessions>().GetAll(x => sessionsIds.Contains(x.Id) && x.StartDate > DateTime.Now).Any();
             if(hasFutureSessions) return false;
             var MemberShips = UnitOfWork.GetRepository<MemberShip>().GetAll(x => x.MemberId == MemberId);

@@ -3,11 +3,7 @@ using GymeManagementBLL.Services.Interfaces;
 using GymeManagementBLL.ViewModels.SessionViewModels;
 using GymeManagementDAL.Entities;
 using GymeManagementDAL.Repositories.InterFaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace GymeManagementBLL.Services.Classes
 {
